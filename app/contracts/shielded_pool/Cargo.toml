@@ -1,0 +1,44 @@
+[
+    package
+]
+name = "shielded-pool" 
+version = "0.1.0" 
+edition = "2021" 
+publish = false 
+
+[
+    lib
+]
+crate-type = ["cdylib", "rlib"]
+
+[
+    dependencies
+]
+# hazmat-crypto gates the BN254/Poseidon2 host-function bindings (CryptoHazmat)
+# added in SDK 25.x and extended in 26.x (CAP-80: MSM, scalar-field ops,
+# curve-membership checks). "Hazmat" naming is intentional on Stellar's part - 
+# these are low-level primitives meant for building verifiers like this one, 
+# not general-purpose contract logic 
+soroban-sdk = {"26.0.0", features = ["hazmat-crypto]}
+[
+    dev-dependencies
+]
+soroban-sdk = { version = "26.0.0", features = ["testutils", "hazmat-crypto"]}
+
+[
+    profile.release
+]
+opt-level = "z" 
+overflow-checks = true 
+debug = 0 
+strip = "symbols" 
+debug-assertions = false 
+panic = "abort" 
+codegen-units = 1 
+lto = true 
+
+[
+    profile.release-with-logs
+]
+inherits = "release" 
+debug-assertions = true 
