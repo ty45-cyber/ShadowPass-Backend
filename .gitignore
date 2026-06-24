@@ -1,0 +1,12 @@
+**/node_modules/
+app/build/
+**/build/
+*.ptau
+*.zkey
+*.wtns
+*.wasm
+*.sym
+verification_key.json
+.DS_Store
+Thumbs.db
+.vscode/
